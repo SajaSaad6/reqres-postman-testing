@@ -14,19 +14,21 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const jasonData = pm.response.json();",
+							"const jsonData = pm.response.json();",
 							"",
 							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"})",
+							"pm.test(\"Status code is 200\",  () => pm.response.to.have.status(200)",
+							");",
 							"",
 							"",
-							"pm.test(\"test case name\", function () {",
-							"    ",
-							"    pm.expect(jasonData.page).to.eql(2);",
-							"    ",
-							"})"
+							"pm.test(\"test case name\",  () => pm.expect(jsonData.page).to.eql(2));",
+							"",
+							"pm.test('Each user has an ID and email', () => {",
+							"    jsonData.data.forEach(user => {",
+							"        pm.expect(user.id).to.exist;",
+							"        pm.expect(user.email).to.match(/@/);",
+							"    });",
+							"    });"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -401,10 +403,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"});",
-							"",
+							"pm.test(\"Status code is 201\",  () => pm.response.to.have.status(201));",
 							"",
 							"const jsonData = pm.response.json();",
 							"",
@@ -458,11 +457,11 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"})",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));",
 							"",
-							"const jsonData = pm.response.json();"
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"UpdatedAt field exists\", () => pm.expect(jsonData.updatedAt).to.exist);"
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -560,11 +559,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 204\", function () {",
-							"    pm.response.to.have.status(204);",
-							"})",
+							"pm.test(\"Status code is 204\", () => pm.response.to.have.status(204));",
 							"",
-							"const jsonData = pm.response.json();",
 							""
 						],
 						"type": "text/javascript",
@@ -603,11 +599,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"})",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200))",
 							"",
-							"const jsonData = pm.response.json();"
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Token exists\", () => pm.expect(jsonData.token).to.exist);",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {},
@@ -755,11 +752,13 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 400\", function () {",
+							"pm.test(\"Status code is 400\", () => {",
 							"    pm.response.to.have.status(400);",
 							"})",
 							"",
-							"const jsonData = pm.response.json();"
+							"const jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Error message present\", () => pm.expect(jsonData.error).to.eql(\"Missing password\"));"
 						],
 						"type": "text/javascript",
 						"packages": {},
